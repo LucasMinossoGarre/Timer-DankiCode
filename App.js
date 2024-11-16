@@ -8,9 +8,9 @@ import Contador from './Contador';
 
 
 export default function App() {
-  const [estado,setarEstado] = useState('Selecionar');
-  const [segundos,setarSegundos] = useState(0);
-  const [minutos,setarMinutos] = useState(1);
+  const [estado,setarEstado] = useState('leitura');
+  const [segundos,setarSegundos] = useState(1);
+  const [minutos,setarMinutos] = useState(0);
 
   const [alarmeSound,setarAlarmeSound] = useState([
     {
@@ -50,7 +50,7 @@ export default function App() {
     setarAlarmeSound(alarmesTemp);
   }
   
-  if(estado == 'Selecionar'){
+  if(estado == 'leitura'){
   return (
     <View style={styles.container}>
       <StatusBar hidden/>
@@ -66,22 +66,24 @@ export default function App() {
       <Text style={{color:'white',fontSize:30}}>Selecione Seu tempo:</Text>
       <View style={{flexDirection:'row'}}>
         <Text style={{color:'white',paddingTop:16}}>Min:</Text>
+        
         <Picker
           selectedValue={minutos}
           onValueChange={(itemValue,itemIndex) => setarMinutos(itemValue)}
           style={{ height: 50, width: 120, color:'white'}}>
+            <Picker.Item label='0' value='0'/>
           {
             numeros.map(function(val){
               return(<Picker.Item label={val.toString()} value={val.toString()}/>);
             })
           }
         </Picker>
+
         <Text style={{color:'white',paddingTop:16}}>Seg:</Text>
         <Picker
           selectedValue={segundos}
           onValueChange={(itemValue,itemIndex) => setarSegundos(itemValue)}
           style={{ height: 50, width: 120, color:'white'}}>
-            <Picker.Item label='0' value='0'/>
           {
             numeros.map(function(val){
               return(<Picker.Item label={val.toString()} value={val.toString()}/>);
@@ -105,7 +107,7 @@ export default function App() {
   );
   } else if (estado == 'iniciar'){
     return(
-      <Contador minutos={minutos} segundos={segundos} setarEstado={setarEstado}/>
+      <Contador setarMinutos={setarMinutos} setarSegundos={setarSegundos} minutos={minutos} segundos={segundos} setarEstado={setarEstado}/>
     );
   }
 }
